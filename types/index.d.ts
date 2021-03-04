@@ -4,5 +4,5 @@ declare type StaticOptions = {
     only?: RegExp;
     smart?: boolean;
 };
-export declare function identity(options: StaticOptions): FoldoBuilder;
+export declare function copyTo(destination: string | undefined, options: StaticOptions): FoldoBuilder;
 export {};

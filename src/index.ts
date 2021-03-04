@@ -22,19 +22,20 @@ function isIgnored(p:string,options:StaticOptions){
   return !shouldInclude || shouldIgnore
 }
 
-export function identity(options:StaticOptions):FoldoBuilder{
+export function copyTo(destination='', options:StaticOptions):FoldoBuilder{
   options = Object.assign({}, defaultOptions, options)
+  let out = (s="") => path.join(destination, s)
   return {
     single: (id) => {
       if(options.smart && /([\w-*]+\.([\w-*]+))\.js/g.exec(path.basename(id))){
         return {
-          [id.slice(0,-3)]: ({ module, p }) => {
+          [out(id.slice(0,-3))]: ({ module, p }) => {
             return isIgnored(p,options) ? null : (module.default || "").toString()
           }
         }
       } else {
         return {
-          [id]: ({ contents, p }) => isIgnored(p,options) ? null : contents
+          [out(id)]: ({ contents, p }) => isIgnored(p,options) ? null : contents
         }
       }
     }
