@@ -1,6 +1,8 @@
 import { FoldoBuilder } from 'foldo/types';
-declare type MyOptions = {
-    x: string;
+declare type StaticOptions = {
+    ignore?: RegExp;
+    only?: RegExp;
+    smart?: boolean;
 };
-export declare function identity(options: MyOptions): FoldoBuilder;
+export declare function identity(options: StaticOptions): FoldoBuilder;
 export {};
