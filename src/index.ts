@@ -29,8 +29,12 @@ export function copyTo(destination='', options:StaticOptions):FoldoBuilder{
     single: (id) => {
       if(options.smart && /([\w-*]+\.([\w-*]+))\.js/g.exec(path.basename(id))){
         return {
-          [out(id.slice(0,-3))]: ({ module, p }) => {
-            return isIgnored(p,options) ? null : (module.default || "").toString()
+          [out(id.slice(0,-3))]: async ({ module, p }) => {
+            if(isIgnored(p,options)){
+              return null
+            }
+            let res = await module.default
+            return (res || "").toString()
           }
         }
       } else {
