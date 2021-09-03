@@ -27,7 +27,7 @@ export function copyTo(destination='', options:StaticOptions):FoldoBuilder{
   let out = (s="") => path.join(destination, s)
   return {
     single: (id) => {
-      if(options.smart && /([\w-*]+\.([\w-*]+))\.js/g.exec(path.basename(id))){
+      if(options.smart && /([\w\-*]+\.([\w\-*]+))\.js/g.exec(path.basename(id))){
         return {
           [out(id.slice(0,-3))]: async ({ module, p }) => {
             if(isIgnored(p,options)){
